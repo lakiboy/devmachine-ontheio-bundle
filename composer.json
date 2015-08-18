@@ -1,0 +1,24 @@
+{
+    "name": "devmachine/ontheio-bundle",
+    "type": "symfony-bundle",
+    "description": "onthe.io image cloud API integration.",
+    "keywords": [ "image", "cloud" ],
+    "homepage": "http://devmachine.net",
+    "license": [ "MIT" ],
+    "authors": [
+        { "name": "Dmitri Lakachauskis", "email": "dmitri@devmachine.net" }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/framework-bundle": "~2.6",
+        "sensio/buzz-bundle": "~1.0"
+    },
+    "autoload": {
+        "psr-4": { "Devmachine\\Bundle\\OntheioBundle\\": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
