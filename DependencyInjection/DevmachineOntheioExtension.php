@@ -15,11 +15,13 @@ class DevmachineOntheioExtension extends ConfigurableExtension
         $loader->load('services.xml');
 
         if (!empty($config['image'])) {
+            $container->setParameter('devmachine_ontheio.client.image.base_url', $config['image']['base_url']);
+
             $container
-                ->getDefinition('devmachine_ontheio.client.image.buzz')
-                ->replaceArgument(0, $config['image'])
+                ->getDefinition('devmachine_ontheio.client.image.signer')
+                ->setArguments([$config['image']['key'], $config['image']['secret']])
+                ->setAbstract(false)
             ;
-            $container->setAlias('devmachine_ontheio.client.image', 'devmachine_ontheio.client.image.buzz');
         }
     }
 }

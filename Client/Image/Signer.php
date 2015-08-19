@@ -18,6 +18,11 @@ class Signer
         return md5($this->key.$content.$this->secret);
     }
 
+    public function signSimple($content)
+    {
+        return substr(md5($content.$this->secret), 0, 8);
+    }
+
     public function getKey()
     {
         return $this->key;

@@ -5,9 +5,24 @@
 
     <services>
 
-        <service id="devmachine_ontheio.client.image.buzz" class="Devmachine\Bundle\OntheioBundle\Client\Image\BuzzClient">
-            <argument />
+        <service id="devmachine_ontheio.client.image" class="Devmachine\Bundle\OntheioBundle\Client\Image\ImageClient">
             <argument type="service" id="buzz" />
+            <argument type="service" id="devmachine_ontheio.client.image.signer" />
+            <argument>%devmachine_ontheio.client.image.base_url%</argument>
+        </service>
+
+        <service id="devmachine_ontheio.client.image.signer" class="Devmachine\Bundle\OntheioBundle\Client\Image\Signer" abstract="true" />
+
+        <service id="devmachine_ontheio.helper.image" class="Devmachine\Bundle\OntheioBundle\Helper\ImageHelper">
+            <argument type="service" id="devmachine_ontheio.client.image.signer" />
+            <argument>%devmachine_ontheio.client.image.base_url%</argument>
+        </service>
+
+        <!-- Twig -->
+
+        <service id="devmachine_ontheio.twig.extension.image" class="Devmachine\Bundle\OntheioBundle\Twig\ImageExtension">
+            <argument type="service" id="devmachine_ontheio.helper.image" />
+            <tag name="twig.extension" />
         </service>
 
     </services>

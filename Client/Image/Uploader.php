@@ -2,7 +2,7 @@
 
 namespace Devmachine\Bundle\OntheioBundle\Client\Image;
 
-interface Client
+interface Uploader
 {
     /**
      * @param string $url

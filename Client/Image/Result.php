@@ -19,7 +19,7 @@ class Result
     {
         list($width, $height) = explode('x', $data['size']);
 
-        return new static($data['key'], $width, $height, $data['full_size'], !$data['uploaded_before']);
+        return new static($data['key'], $width, $height, $data['full_size'], empty($data['uploaded_before']));
     }
 
     public function __construct($key, $width, $height, $url, $new)
