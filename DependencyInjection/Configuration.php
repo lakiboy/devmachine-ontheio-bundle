@@ -19,7 +19,6 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('key')->isRequired()->cannotBeEmpty()->end()
                         ->scalarNode('secret')->isRequired()->cannotBeEmpty()->end()
                         ->scalarNode('base_url')->cannotBeEmpty()->defaultValue('https://i.onthe.io')->end()
-                        ->integerNode('timeout')->defaultValue(10)->end()
                     ->end()
                 ->end()
             ->end()
