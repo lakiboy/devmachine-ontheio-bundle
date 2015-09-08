@@ -1,8 +1,8 @@
 {% block devmachine_ontheio_image_gallery_widget %}
 {% spaceless %}
-    <div id="{{ id }}">
+    <div id="{{ id }}" class="clearfix">
 
-        <div class="items clearfix" style="margin-right: -10px;" {% if allow_add %}data-prototype="{{ form_widget(prototype) | e }}"{% endif %}>
+        <div class="items" style="margin-right: -10px;" {% if allow_add %}data-prototype="{{ form_widget(prototype) | e }}"{% endif %}>
             {% for item in form %}
                 <div class="item">
                     {{ form_widget(item) }}
