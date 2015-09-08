@@ -25,5 +25,11 @@
             <tag name="twig.extension" />
         </service>
 
+        <!-- Form types -->
+
+        <service id="devmachine_ontheio.form.type.image_gallery" class="Devmachine\Bundle\OntheioBundle\Form\Type\ImageGalleryType">
+            <tag name="form.type" alias="devmachine_ontheio_image_gallery" />
+        </service>
+
     </services>
 </container>

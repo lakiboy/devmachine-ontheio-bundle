@@ -1,0 +1,97 @@
+{% block devmachine_ontheio_image_gallery_widget %}
+{% spaceless %}
+    <div id="{{ id }}">
+
+        <div class="items" class="clearfix" style="margin-right: -10px;" {% if allow_add %}data-prototype="{{ form_widget(prototype) | e }}"{% endif %}>
+            {% for item in form %}
+                <div class="item">
+                    {{ form_widget(item) }}
+
+                    {% set image = {
+                        key:          item.key.vars.data,
+                        width:        item.width.vars.data,
+                        height:       item.height.vars.data,
+                        original_url: item.originalUrl.vars.data,
+                        error:        item.error.vars.data
+                    } %}
+
+                    {{ block('devmachine_ontheio_image_thumbnail') }}
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if allow_add %}
+            <a class="add" href="#{{ id }}-add-modal" data-toggle="modal">
+                <div class="thumbnail pull-left">
+                    <img src="//placehold.it/{{ thumb_width }}x{{ thumb_height }}?text={{ '+' | url_encode }}" alt="">
+                    <div class="caption text-center">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        {{ 'image.button.upload' | trans({}, translation_domain) }}
+                    </div>
+                </div>
+            </a>
+        {% endif %}
+
+        {% if allow_add %}
+            <div id="{{ id }}-add-modal" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">{{ 'image.message.prompt.url' | trans({}, translation_domain) }}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input class="url form-control" type="url" name="url" value="" required>
+                            <div class="progress" style="display: none;">
+                                <div class="progress-bar progress-bar-striped active" style="width: 100%"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="cancel btn btn-default" data-dismiss="modal">
+                                {{- 'image.button.cancel' | trans({}, translation_domain) -}}
+                            </button>
+                            <button type="button" class="upload btn btn-primary" data-url="{{ path('devmachine_ontheio_image_thumbnail', { width: thumb_width, height: thumb_height, trans_domain: translation_domain }) }}">
+                                {{- 'image.button.upload' | trans({}, translation_domain) -}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endspaceless %}
+{% endblock %}
+
+{% block devmachine_ontheio_image_thumbnail %}
+{% spaceless %}
+    <div class="thumbnail pull-left" style="margin-right: 10px;">
+
+        {% if image.error %}
+            <img src="//placehold.it/{{ thumb_width }}x{{ thumb_height }}?text=Failed" alt="">
+        {% else %}
+            <a class="preview" href="{{ image.key | devmachine_ontheio_image_url }}" title="{{ image.width }}x{{ image.height }}" data-source="{{ image.original_url }}">
+                <img src="{{ image.key | devmachine_ontheio_image_url(thumb_width, thumb_height) }}" alt="">
+            </a>
+        {% endif %}
+
+        <div class="caption">
+            <a class="delete text-danger pull-right"
+               href="#"
+               title="{{ 'image.action.delete' | trans({}, translation_domain) }}"
+               data-message="{{ 'image.message.confirm.delete' | trans({}, translation_domain) }}"
+               data-confirm="{{ 'image.button.delete' | trans({}, translation_domain) }}"
+               data-cancel="{{ 'image.button.cancel' | trans({}, translation_domain) }}"
+            >
+                <span class="glyphicon glyphicon-remove"></span>
+            </a>
+            <span class="small">
+                {% if image.error %}
+                    {{ image.error | truncate(28) }}
+                {% else %}
+                    {{ image.width }}x{{ image.height }}
+                {% endif %}
+            </span>
+        </div>
+    </div>
+{% endspaceless %}
+{% endblock %}

@@ -1,0 +1,109 @@
+{% block devmachine_ontheio_image_gallery_javascript %}
+    <script type="text/javascript">
+        $(function () {
+
+            function imageLink(href, title) {
+                return ' &middot; <a href="' + href + '" target="_blank">' + title + '</a>';
+            }
+
+            // Preview image.
+            function enablePopup($elem) {
+                $elem.magnificPopup({
+                    type: 'image',
+                    gallery: {
+                        enabled: true
+                    },
+                    image: {
+                        titleSrc: function(item) {
+                            return item.el.attr('title') +
+                                imageLink(item.el.attr('href'), '{{ 'image.label.image_url' | trans({}, translation_domain) }}') +
+                                imageLink(item.el.attr('data-source'), '{{ 'image.label.original_url' | trans({}, translation_domain) }}');
+                        }
+                    }
+                });
+            }
+
+            // Delete image.
+            $('#{{ id }}').on('click', '.delete', function () {
+                var $elem = $(this);
+
+                bootbox.confirm({
+                    message: $elem.data('message'),
+                    buttons: {
+                        confirm: { className: 'btn-danger', label: $elem.data('confirm') },
+                        cancel: { label: $elem.data('cancel') }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            $elem.parents('.item').first().fadeOut('slow', function () {
+                                $(this).remove();
+                            });
+                        }
+                    }
+                });
+
+                return false;
+            });
+
+            enablePopup($('#{{ id }} .preview'));
+
+            var $add = $('#{{ id }}-add-modal'),
+                $upload = $('.upload', $add),
+                $progress = $('.progress', $add),
+                $url = $('.url', $add),
+                $items = $('#{{ id }} .items'),
+                number = $items.children().size(),
+                xhr;
+
+            $add.on('shown.bs.modal', function () {
+                $url.focus();
+            }).on('hide.bs.modal', function () {
+                if (xhr) {
+                    xhr.abort();
+                }
+
+                $url.show().val('');
+                $progress.hide();
+                $upload.show();
+                xhr = null;
+            });
+
+            // Upload image.
+            $upload.click(function () {
+                if (!$.trim($url.val())) {
+                    return false;
+                }
+
+                $url.hide();
+                $progress.show();
+                $upload.hide();
+
+                xhr = $.ajax({
+                    method: 'post',
+                    url: $(this).data('url'),
+                    data: { url: $url.val() },
+                    error: function () {
+                        $add.modal('hide');
+                    },
+                    success: function (resp) {
+                        $add.modal('hide');
+
+                        var $form = $($items.data('prototype').replace(/__name__/g, number++)), $item = $('<div class="item"></div>');
+
+                        $form.children().each(function () {
+                            var $elem = $(this), parts = $elem.attr('name').split(']['), prop = parts[parts.length - 1].split(']')[0];
+                            prop = prop === 'originalUrl' ? 'original_url' : prop;
+                            $elem.val(resp.image[prop]);
+                        });
+
+                        $items.append($item.append($form).append(resp.html));
+
+                        enablePopup($('.preview', $item));
+                    }
+                });
+
+                return false;
+            });
+        });
+    </script>
+{% endblock %}

@@ -2,8 +2,12 @@
 
 namespace Devmachine\Bundle\OntheioBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ImageController extends Controller
 {
@@ -17,7 +21,7 @@ class ImageController extends Controller
      */
     public function rotateAction($key, $angle)
     {
-        return $this->getManipulator()->rotate($key, $angle);
+        return $this->getClient()->rotate($key, $angle);
     }
 
     /**
@@ -30,13 +34,60 @@ class ImageController extends Controller
      */
     public function delete($key, $thumb = null)
     {
-        return $this->getManipulator()->delete($key, $thumb);
+        return $this->getClient()->delete($key, $thumb);
     }
 
     /**
-     * @return \Devmachine\Bundle\OntheioBundle\Client\Image\Manipulator
+     * @Route("/thumbnail")
+     * @Method("POST")
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function getManipulator()
+    public function thumbnailAction(Request $request)
+    {
+        $url = $request->request->get('url');
+
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+            return Response::create('', Response::HTTP_BAD_REQUEST);
+        }
+
+        $result = [
+            'key'          => null,
+            'width'        => null,
+            'height'       => null,
+            'original_url' => $url,
+            'error'        => null,
+        ];
+
+        try {
+            $image = $this->getClient()->uploadByUrl($url);
+
+            $result['key']    = $image->getKey();
+            $result['width']  = $image->getWidth();
+            $result['height'] = $image->getHeight();
+        } catch (\Exception $e) {
+            $result['error'] = $e->getMessage();
+        }
+
+        /** @var \Twig_Template $template */
+        $template = $this->get('twig')->loadTemplate('DevmachineOntheioBundle:Form:form_layout.html.twig');
+
+        $html = $template->renderBlock('devmachine_ontheio_image_thumbnail', [
+            'thumb_width'        => $request->query->get('width'),
+            'thumb_height'       => $request->query->get('height'),
+            'translation_domain' => $request->query->get('trans_domain'),
+            'image'              => $result,
+        ]);
+
+        return JsonResponse::create(['html' => $html, 'image' => $result]);
+    }
+
+    /**
+     * @return \Devmachine\Bundle\OntheioBundle\Client\Image\ImageClient
+     */
+    private function getClient()
     {
         return $this->get('devmachine_ontheio.client.image');
     }

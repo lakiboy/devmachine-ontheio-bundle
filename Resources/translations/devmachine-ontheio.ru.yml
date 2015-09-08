@@ -1,0 +1,19 @@
+
+image:
+    action:
+        delete: Удалить
+        info: Инфо
+    label:
+        image: Изображение
+        gallery: Галерея
+        original_url: Оригинальный URL
+        image_url: URL изображения
+    button:
+        upload: Загрузить
+        delete: Удалить
+        cancel: Отменить
+    message:
+        confirm:
+            delete: Удалить изображение?
+        prompt:
+            url: Введите URL изображения

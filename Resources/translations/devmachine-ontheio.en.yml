@@ -1,0 +1,19 @@
+
+image:
+    action:
+        delete: Delete
+        info: Info
+    label:
+        image: Image
+        gallery: Gallery
+        original_url: Original URL
+        image_url: Image URL
+    button:
+        upload: Upload
+        delete: Delete
+        cancel: Cancel
+    message:
+        confirm:
+            delete: Delete image?
+        prompt:
+            url: Enter image URL
