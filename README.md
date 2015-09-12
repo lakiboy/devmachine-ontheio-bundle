@@ -76,13 +76,13 @@ class MyController extends Controller
         
         // You can render hosted URLs with image helper.
         return $this->render('PathToTemplate.html.twig', [
-            // Hosted URL of original image
+            // Hosted URL of original image.
             'url' => $this->get('devmachine_ontheio.helper.image')->url($key),
             
-            // Resize image into 200x150
+            // Resize image into 200x150.
             'thumbnail_url' => $this->get('devmachine_ontheio.helper.image')->resizeUrl($key, 200, 150),
             
-            // Crop image into 150x150 starting from (50, 50)
+            // Crop image into 150x150 starting from (50, 50).
             'avatar_url' => $this->get('devmachine_ontheio.helper.image')->cropUrl($key, 150, 150, 50, 50),
         ]);
     }
