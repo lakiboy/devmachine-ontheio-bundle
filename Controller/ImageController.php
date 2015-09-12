@@ -32,7 +32,7 @@ class ImageController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function delete($key, $thumb = null)
+    public function deleteAction($key, $thumb = null)
     {
         return $this->getClient()->delete($key, $thumb);
     }
