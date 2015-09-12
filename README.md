@@ -82,9 +82,14 @@ class MyController extends Controller
         
         // You can render hosted URLs with image helper.
         return $this->render('PathToTemplate.html.twig', [
-            'url'           => $this->get('devmachine_ontheio.helper.image')->url($key),
+            // Hosted URL of original image
+            'url' => $this->get('devmachine_ontheio.helper.image')->url($key),
+            
+            // Resize image into 200x150
             'thumbnail_url' => $this->get('devmachine_ontheio.helper.image')->resizeUrl($key, 200, 150),
-            'avatar_url'    => $this->get('devmachine_ontheio.helper.image')->cropUrl(resizeUrl, 150, 150, 50, 50),
+            
+            // Crop image into 150x150 starting from (50, 50)
+            'avatar_url' => $this->get('devmachine_ontheio.helper.image')->cropUrl($key, 150, 150, 50, 50),
         ]);
     }
     
@@ -106,5 +111,9 @@ class MyController extends Controller
 
 Original:  <img src="{{ key | devmachine_ontheio_image_url }}" alt=""><br>
 Thumbnail: <img src="{{ key | devmachine_ontheio_image_url(200, 150) }}" alt=""><br>
-Avatar:    <img src="{{ key | devmachine_ontheio_image_url(200, 150, 50, 50) }}" alt="">
+Avatar:    <img src="{{ key | devmachine_ontheio_image_url(150, 150, 50, 50) }}" alt="">
 ```
+
+#### Note
+
+The API docs suggests you can rotate and delete images. Albeit integration for these features was implemented, I wasn't able to achieve described functionality. You can examine `ImageClient::rotate()` and `ImageClient::delete()` methods.
