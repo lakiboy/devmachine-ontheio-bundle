@@ -58,9 +58,9 @@ devmachine_ontheio:
 class MyController extends Controller
 {
     /**
-     * Example upload action.
+     * Upload remote URL to the cloud.
      */
-    public function uploadAction(Request $request)
+    public function uploadUrlAction(Request $request)
     {
         // Get URL from request.
         $url = $request->query->get('url');
@@ -87,6 +87,24 @@ class MyController extends Controller
             'avatar_url'    => $this->get('devmachine_ontheio.helper.image')->cropUrl(resizeUrl, 150, 150, 50, 50),
         ]);
     }
+    
+    /**
+     * Upload image from file i.e. convert local file to hosted image.
+     */
+    public function uploadFileAction()
+    {
+        // Assuming $filepath is set.
+        $result = $this->get('devmachine_ontheio.client.image')->uploadByFile($filepath);
+    }
 }
+```
 
+#### Twig helper
+
+```twig
+{# PathToTemplate.html.twig #}
+
+Original:  <img src="{{ key | devmachine_ontheio_image_url }}" alt=""><br>
+Thumbnail: <img src="{{ key | devmachine_ontheio_image_url(200, 150) }}" alt=""><br>
+Avatar:    <img src="{{ key | devmachine_ontheio_image_url(200, 150, 50, 50) }}" alt="">
 ```
