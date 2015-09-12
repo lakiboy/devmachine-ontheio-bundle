@@ -117,3 +117,46 @@ Avatar:    <img src="{{ key | devmachine_ontheio_image_url(150, 150, 50, 50) }}"
 #### Note
 
 The API docs suggests you can rotate and delete images. Albeit integration for these features was implemented, I wasn't able to achieve described functionality. You can examine `ImageClient::rotate()` and `ImageClient::delete()` methods.
+
+## Form integration
+
+You can integrate image uploads right into your form.
+
+```php
+/**
+ * Example form type with images collection.
+ */
+class MyType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('foo', 'text')
+            ->add('bar', 'text')
+            ->add('images', 'devmachine_ontheio_image_gallery')
+        ;
+    }
+}
+```
+
+Bootstrap 3 theme:
+
+![Gallery](https://raw.githubusercontent.com/dev-machine/DevmachineOntheioBundle/master/Resources/doc/gallery.jpg)
+
+_Only image uploads by URL is supported at the moment._
+
+Gallery form type assumes following Javascript and CSS code is present:
+
+ - [Bootbox](http://bootboxjs.com)
+ - [Magnific popup](http://dimsemenov.com/plugins/magnific-popup)
+
+Example `bower.json`:
+
+```javascript
+{
+    "dependencies": {
+        "bootbox": "~4.4",
+        "magnific-popup": "~1.0"
+    }
+}
+```
