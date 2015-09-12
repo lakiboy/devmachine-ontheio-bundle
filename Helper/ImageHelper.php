@@ -51,15 +51,9 @@ class ImageHelper
      * @param int    $top
      *
      * @return string
-     *
-     * @throws \InvalidArgumentException
      */
     public function cropUrl($key, $width, $height, $left, $top)
     {
-        if (!$width || !$height) {
-            throw new \InvalidArgumentException('Width and height must be set for the key.');
-        }
-
         return $this->url($key.'.c'.$width.'x'.$height.'x'.$left.'x'.$top);
     }
 }

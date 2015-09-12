@@ -12,9 +12,10 @@ class DevmachineOntheioExtension extends ConfigurableExtension
     protected function loadInternal(array $config, ContainerBuilder $container)
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
 
         if (!empty($config['image'])) {
+            $loader->load('image.xml');
+
             $container->setParameter('devmachine_ontheio.client.image.base_url', $config['image']['base_url']);
 
             $container
