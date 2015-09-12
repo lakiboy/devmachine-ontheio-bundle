@@ -49,12 +49,6 @@ devmachine_ontheio:
 ## Example usage
 
 ```php
-/**
- * Demonstrates usage of:
- *
- *   - image client to upload images,
- *   - image helper to render hosted URLs.
- */
 class MyController extends Controller
 {
     /**
@@ -123,9 +117,6 @@ The API docs suggests you can rotate and delete images. Albeit integration for t
 You can integrate image uploads right into your form.
 
 ```php
-/**
- * Example form type with images collection.
- */
 class MyType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
