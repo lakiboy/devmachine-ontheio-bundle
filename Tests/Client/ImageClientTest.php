@@ -53,7 +53,7 @@ class ImageClientTest extends \PHPUnit_Framework_TestCase implements ListenerInt
     /**
      * @expectedException \RuntimeException
      */
-    public function testUploadBuFileExpectsValidFile()
+    public function testUploadByFileExpectsValidFile()
     {
         (new ImageClient($this->buzz, $this->signer, 'http://base.url'))->uploadByFile('no-such-file');
     }

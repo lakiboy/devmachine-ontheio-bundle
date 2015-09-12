@@ -23,13 +23,13 @@ class SignerTest extends \PHPUnit_Framework_TestCase
     {
         $content = 'secret content';
 
-        $this->assertEquals(md5(sprintf('key%ssecret', $content)), $this->signer->sign($content));
+        $this->assertEquals('9565a454cb8973824499f4117dfa4bd1', $this->signer->sign($content));
     }
 
     public function testSignSimple()
     {
         $content = 'secret content';
 
-        $this->assertEquals(substr(md5(sprintf('%ssecret', $content)), 0, 8), $this->signer->signSimple($content));
+        $this->assertEquals('3c56c498', $this->signer->signSimple($content));
     }
 }
