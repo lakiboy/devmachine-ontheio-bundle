@@ -7,3 +7,86 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dev-machine/DevmachineOntheioBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/dev-machine/DevmachineOntheioBundle/?branch=master)
 
 [onthe.io](https://i.onthe.io) image cloud API integration.
+
+## Installation
+
+Install this bundle using Composer. Add the following to your composer.json:
+
+```javascript
+{
+    "require": {
+        "devmachine/ontheio-bundle": "~1.0"
+    }
+}
+```
+
+Register bundle in the kernel:
+
+```php
+<?php
+// app/AppKernel.php
+
+public function registerBundles()
+{
+    $bundles = array(
+        // ...
+
+        new Devmachine\Bundle\OntheioBundle\DevmachineOntheioBundle(),
+        new Sensio\Bundle\BuzzBundle\SensioBuzzBundle(),
+    );
+}
+```
+
+Update config:
+
+```yaml
+devmachine_ontheio:
+    image:
+        key: "your-key"
+        secret: "your-secret"
+```
+
+## Example usage
+
+```php
+/**
+ * Demonstrates usage of:
+ *
+ *   - image client to upload images,
+ *   - image helper to render hosted URLs.
+ */
+class MyController extends Controller
+{
+    /**
+     * Example upload action.
+     */
+    public function uploadAction(Request $request)
+    {
+        // Get URL from request.
+        $url = $request->query->get('url');
+    
+        // Upload image using URL.
+        $result = $this->get('devmachine_ontheio.client.image')->uploadByUrl($url);
+        
+        // Key from image API - you can save this in DB.
+        $key = $result->getKey();
+        
+        // Width of uploaded image.
+        $width = $result->getWidth();
+        
+        // Height of uploaded image.
+        $height = $result->getHeight();
+        
+        // Check if same URL was uploaded before.
+        $new = $result->isNew();
+        
+        // You can render hosted URLs with image helper.
+        return $this->render('PathToTemplate.html.twig', [
+            'url'           => $this->get('devmachine_ontheio.helper.image')->url($key),
+            'thumbnail_url' => $this->get('devmachine_ontheio.helper.image')->resizeUrl($key, 200, 150),
+            'avatar_url'    => $this->get('devmachine_ontheio.helper.image')->cropUrl(resizeUrl, 150, 150, 50, 50),
+        ]);
+    }
+}
+
+```
