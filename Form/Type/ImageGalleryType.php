@@ -3,20 +3,21 @@
 namespace Devmachine\Bundle\OntheioBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ImageGalleryType extends AbstractType
 {
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'devmachine_ontheio_image_gallery';
     }
 
     public function getParent()
     {
-        return 'collection';
+        return CollectionType::class;
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -27,7 +28,7 @@ class ImageGalleryType extends AbstractType
             'thumb_width'        => 200,
             'thumb_height'       => 150,
             'required'           => false,
-            'type'               => new ImageType(),
+            'type'               => ImageType::class,
             'allow_add'          => true,
             'allow_delete'       => true,
         ]);

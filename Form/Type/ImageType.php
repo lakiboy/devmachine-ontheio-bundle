@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ImageType extends AbstractType
 {
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'devmachine_ontheio_image';
     }
