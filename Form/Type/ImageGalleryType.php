@@ -28,7 +28,7 @@ class ImageGalleryType extends AbstractType
             'thumb_width'        => 200,
             'thumb_height'       => 150,
             'required'           => false,
-            'type'               => ImageType::class,
+            'entry_type'         => ImageType::class,
             'allow_add'          => true,
             'allow_delete'       => true,
         ]);
