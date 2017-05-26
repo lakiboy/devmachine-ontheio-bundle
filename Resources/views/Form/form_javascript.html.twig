@@ -52,7 +52,7 @@
                 $progress = $('.progress', $add),
                 $url = $('.url', $add),
                 $items = $('#{{ id }} .items'),
-                number = $items.children().size(),
+                number = $items.children().length,
                 xhr;
 
             $add.on('shown.bs.modal', function () {
