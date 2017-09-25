@@ -4,6 +4,10 @@
 
 [onthe.io](https://i.onthe.io) image cloud API integration.
 
+## 2017 update
+
+[i.onthe.io](http://i.onthe.io) service is no longer available for public use. Consider integrating another image cloud provider.
+
 ## Installation
 
 Install this bundle using Composer. Add the following to your composer.json:
