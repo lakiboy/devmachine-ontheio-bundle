@@ -28,12 +28,12 @@ Register bundle in the kernel:
 
 public function registerBundles()
 {
-    $bundles = array(
+    $bundles = [
         // ...
 
         new Devmachine\Bundle\OntheioBundle\DevmachineOntheioBundle(),
         new Sensio\Bundle\BuzzBundle\SensioBuzzBundle(),
-    );
+    ];
 }
 ```
 
