@@ -3,10 +3,10 @@
     "type": "symfony-bundle",
     "description": "onthe.io image cloud API integration.",
     "keywords": [ "image", "cloud" ],
-    "homepage": "http://devmachine.net",
+    "homepage": "https://github.com/lakiboy/devmachine-ontheio-bundle",
     "license": [ "MIT" ],
     "authors": [
-        { "name": "Dmitri Lakachauskis", "email": "dmitri@devmachine.net" }
+        { "name": "Dmitri Lakachauskis", "email": "lakiboy83@gmail.com" }
     ],
     "require": {
         "php": ">=5.5.9",

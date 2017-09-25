@@ -1,6 +1,6 @@
 # DevmachineOntheioBundle
 
-[![Build Status](https://travis-ci.org/dev-machine/DevmachineOntheioBundle.svg?branch=master)](https://travis-ci.org/dev-machine/DevmachineOntheioBundle) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dev-machine/DevmachineOntheioBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/dev-machine/DevmachineOntheioBundle/?branch=master) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/f69b2da6-d4ef-4263-a0e0-047ae3c0491e/mini.png)](https://insight.sensiolabs.com/projects/f69b2da6-d4ef-4263-a0e0-047ae3c0491e)
+[![Build Status](https://travis-ci.org/lakiboy/devmachine-ontheio-bundle.svg?branch=master)](https://travis-ci.org/lakiboy/devmachine-ontheio-bundle) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lakiboy/devmachine-ontheio-bundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lakiboy/devmachine-ontheio-bundle/?branch=master) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/f69b2da6-d4ef-4263-a0e0-047ae3c0491e/mini.png)](https://insight.sensiolabs.com/projects/f69b2da6-d4ef-4263-a0e0-047ae3c0491e)
 
 [onthe.io](https://i.onthe.io) image cloud API integration.
 
@@ -54,35 +54,35 @@ class MyController extends Controller
     {
         // Get URL from request.
         $url = $request->query->get('url');
-    
+
         // Upload image using URL.
         $result = $this->get('devmachine_ontheio.client.image')->uploadByUrl($url);
-        
+
         // Key from image API - you can save this in DB.
         $key = $result->getKey();
-        
+
         // Width of uploaded image.
         $width = $result->getWidth();
-        
+
         // Height of uploaded image.
         $height = $result->getHeight();
-        
+
         // Check if same URL was uploaded before.
         $new = $result->isNew();
-        
+
         // You can render hosted URLs with image helper.
         return $this->render('PathToTemplate.html.twig', [
             // Hosted URL of original image.
             'url' => $this->get('devmachine_ontheio.helper.image')->url($key),
-            
+
             // Resize image into 200x150.
             'thumbnail_url' => $this->get('devmachine_ontheio.helper.image')->resizeUrl($key, 200, 150),
-            
+
             // Crop image into 150x150 starting from (50, 50).
             'avatar_url' => $this->get('devmachine_ontheio.helper.image')->cropUrl($key, 150, 150, 50, 50),
         ]);
     }
-    
+
     /**
      * Upload image from file i.e. convert local file to hosted image.
      */
@@ -128,7 +128,7 @@ class MyType extends AbstractType
 
 Bootstrap 3 theme:
 
-![Gallery](https://raw.githubusercontent.com/dev-machine/DevmachineOntheioBundle/master/Resources/doc/gallery.jpg)
+![Gallery](https://raw.githubusercontent.com/lakiboy/devmachine-ontheio-bundle/master/Resources/doc/gallery.jpg)
 
 _Only image uploads by URL is supported at the moment._
 
