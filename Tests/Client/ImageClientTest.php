@@ -20,7 +20,7 @@ class ImageClientTest extends \PHPUnit_Framework_TestCase implements ListenerInt
     public function setUp()
     {
         $this->signer = new Signer('key', 'secret');
-        $this->buzz = new Browser($this->getMock('Buzz\Client\ClientInterface'));
+        $this->buzz = new Browser($this->makeMock('Buzz\Client\ClientInterface'));
         $this->buzz->addListener($this);
     }
 
@@ -71,5 +71,14 @@ class ImageClientTest extends \PHPUnit_Framework_TestCase implements ListenerInt
         $this->assertInstanceOf('Buzz\Message\Form\FormRequest', $this->request);
         $this->assertInstanceOf('Buzz\Message\Form\FormUpload', $this->request->getFields()['file']);
         $this->assertEquals($file, $this->request->getFields()['file']->getFile());
+    }
+
+    private function makeMock($originalClassName)
+    {
+        if (method_exists($this, 'createMock')) {
+            return $this->createMock($originalClassName);
+        }
+
+        return $this->getMock($originalClassName);
     }
 }
