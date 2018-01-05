@@ -5,7 +5,7 @@
 
     <services>
 
-        <service id="devmachine_ontheio.client.image" class="Devmachine\Bundle\OntheioBundle\Client\Image\ImageClient">
+        <service id="devmachine_ontheio.client.image" class="Devmachine\Bundle\OntheioBundle\Client\Image\ImageClient" public="true">
             <argument type="service" id="buzz" />
             <argument type="service" id="devmachine_ontheio.client.image.signer" />
             <argument>%devmachine_ontheio.client.image.base_url%</argument>
